@@ -1,17 +1,14 @@
 package edu.nmhu.bssd5250.mediaplayer
 
-import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.View
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.commit
 
 class MainActivity : AppCompatActivity() {
 
-    private val PLAYTIME:String = "edu.nmhu.bssd5250.mediaplayer.playtime"
+    private val STEP_TAG:String = "edu.nmhu.bssd5250.mediaplayer.step_tag"  // tag to look up frag
+    private val LLID:Int = 123 // constant id for linear layout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +19,21 @@ class MainActivity : AppCompatActivity() {
                 LinearLayoutCompat.LayoutParams.MATCH_PARENT,
                 LinearLayoutCompat.LayoutParams.MATCH_PARENT
             )
-            id = View.generateViewId()
+            id = LLID
         }
         setContentView(ll)
+
+        if (savedInstanceState == null) {
+            // create fragment for collection edit buttons
+            supportFragmentManager.commit {
+                replace(ll.id, AudioFragment.newInstance(R.raw.step), STEP_TAG)
+            }
+        }else{
+            val stepFragment = supportFragmentManager.findFragmentByTag(STEP_TAG) as AudioFragment
+            supportFragmentManager.commit {
+                replace(ll.id, stepFragment, STEP_TAG)
+            }
+        }
 
         supportFragmentManager.commit{
             add(ll.id, AudioFragment.newInstance(R.raw.step))

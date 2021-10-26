@@ -7,27 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AudioFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+import androidx.lifecycle.ViewModelProvider
 
 private const val AUDIO_RES = "audio_file" //key for bundle
 
 class AudioFragment : Fragment() {
+
+    private lateinit var viewModel:AudioViewModel
 
     private var mediaPlayer: MediaPlayer? = null //will hold meidaplayer
     private var audioRes:Int? = null //resource to play
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(AudioViewModel::class.java)
         arguments?.let {
             audioRes = it.getInt(AUDIO_RES) //load arguament from companion
         }
@@ -37,23 +30,47 @@ class AudioFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mediaPlayer = MediaPlayer.create(context, audioRes!!) //make mediaplayer
-
-        // Inflate the layout for this fragment
+        if(this.mediaPlayer == null){
+            this.mediaPlayer = MediaPlayer.create(context, audioRes!!) //make mediaplayer
+        }
         val v:View = inflater.inflate(R.layout.fragment_audio, container, false)
         //look up each button and give it click listener
         v.findViewById<Button>(R.id.play_button).apply {
             setOnClickListener {
-                mediaPlayer?.start()
+                playMedia()
             }
         }
         v.findViewById<Button>(R.id.stop_button).apply {
             setOnClickListener {
-                mediaPlayer?.stop()
-                mediaPlayer?.prepare()
+                stopMedia()
             }
         }
         return v
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if(viewModel.getCurrentTime() > 0){
+            playMedia(viewModel.getCurrentTime())
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.setCurrentTime((this.mediaPlayer?.currentPosition!!))
+        stopMedia()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    private fun playMedia(time:Int = 0) {
+        mediaPlayer?.seekTo(time)
+        mediaPlayer?.start()
+    }
+
+    private fun stopMedia(time:Int = 0) {
+        mediaPlayer?.stop()
+        mediaPlayer?.prepare()
     }
 
     companion object {
