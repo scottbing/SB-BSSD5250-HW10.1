@@ -8,6 +8,8 @@ import androidx.fragment.app.commit
 class MainActivity : AppCompatActivity() {
 
     private val STEP_TAG:String = "edu.nmhu.bssd5250.mediaplayer.step_tag"  // tag to look up frag
+    private val EAGLE_TAG:String = "edu.nmhu.bssd5250.mediaplayer.eagle_tag"  // tag to look up frag
+    private val LAUNCH_TAG:String = "edu.nmhu.bssd5250.mediaplayer.launch_tag"  // tag to look up frag
     private val LLID:Int = 123 // constant id for linear layout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,15 +30,31 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 replace(ll.id, AudioFragment.newInstance(R.raw.step), STEP_TAG)
             }
+            supportFragmentManager.commit {
+                replace(ll.id, AudioFragment.newInstance(R.raw.eagle), STEP_TAG)
+            }
+            supportFragmentManager.commit {
+                replace(ll.id, AudioFragment.newInstance(R.raw.launch), STEP_TAG)
+            }
         }else{
             val stepFragment = supportFragmentManager.findFragmentByTag(STEP_TAG) as AudioFragment
             supportFragmentManager.commit {
                 replace(ll.id, stepFragment, STEP_TAG)
             }
+            val eagleFragment = supportFragmentManager.findFragmentByTag(EAGLE_TAG) as AudioFragment
+            supportFragmentManager.commit {
+                replace(ll.id, eagleFragment, EAGLE_TAG)
+            }
+            val launchFragment = supportFragmentManager.findFragmentByTag(LAUNCH_TAG) as AudioFragment
+            supportFragmentManager.commit {
+                replace(ll.id, launchFragment, LAUNCH_TAG)
+            }
         }
 
         supportFragmentManager.commit{
             add(ll.id, AudioFragment.newInstance(R.raw.step))
+            add(ll.id, AudioFragment.newInstance(R.raw.eagle))
+            add(ll.id, AudioFragment.newInstance(R.raw.launch))
         }
     }
 }
