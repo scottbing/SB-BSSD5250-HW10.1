@@ -30,24 +30,34 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.commit {
                 replace(ll.id, AudioFragment.newInstance(R.raw.step), STEP_TAG)
             }
+        }else{
+            val stepFragment = supportFragmentManager.findFragmentByTag(STEP_TAG) as AudioFragment
+            supportFragmentManager.commit {
+                replace(ll.id, stepFragment, STEP_TAG)
+            }
+        }
+
+        if (savedInstanceState == null) {
+            // create fragment for collection edit buttons
             supportFragmentManager.commit {
                 replace(ll.id, AudioFragment.newInstance(R.raw.eagle), EAGLE_TAG)
             }
+        }else{
+            val eagleFragment = supportFragmentManager.findFragmentByTag(EAGLE_TAG) as AudioFragment
+            supportFragmentManager.commit {
+                replace(ll.id, eagleFragment, EAGLE_TAG)
+            }
+        }
+
+        if (savedInstanceState == null) {
+            // create fragment for collection edit buttons
             supportFragmentManager.commit {
                 replace(ll.id, AudioFragment.newInstance(R.raw.launch), LAUNCH_TAG)
             }
         }else{
-            var audioFragment = supportFragmentManager.findFragmentByTag(STEP_TAG) as AudioFragment
+            val launchFragment = supportFragmentManager.findFragmentByTag(LAUNCH_TAG) as AudioFragment
             supportFragmentManager.commit {
-                replace(ll.id, audioFragment, STEP_TAG)
-            }
-            audioFragment = supportFragmentManager.findFragmentByTag(EAGLE_TAG) as AudioFragment
-            supportFragmentManager.commit {
-                replace(ll.id, audioFragment, EAGLE_TAG)
-            }
-            audioFragment = supportFragmentManager.findFragmentByTag(LAUNCH_TAG) as AudioFragment
-            supportFragmentManager.commit {
-                replace(ll.id, audioFragment, LAUNCH_TAG)
+                replace(ll.id, launchFragment, LAUNCH_TAG)
             }
         }
 
