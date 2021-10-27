@@ -31,23 +31,23 @@ class MainActivity : AppCompatActivity() {
                 replace(ll.id, AudioFragment.newInstance(R.raw.step), STEP_TAG)
             }
             supportFragmentManager.commit {
-                replace(ll.id, AudioFragment.newInstance(R.raw.eagle), STEP_TAG)
+                replace(ll.id, AudioFragment.newInstance(R.raw.eagle), EAGLE_TAG)
             }
             supportFragmentManager.commit {
-                replace(ll.id, AudioFragment.newInstance(R.raw.launch), STEP_TAG)
+                replace(ll.id, AudioFragment.newInstance(R.raw.launch), LAUNCH_TAG)
             }
         }else{
-            val stepFragment = supportFragmentManager.findFragmentByTag(STEP_TAG) as AudioFragment
+            var audioFragment = supportFragmentManager.findFragmentByTag(STEP_TAG) as AudioFragment
             supportFragmentManager.commit {
-                replace(ll.id, stepFragment, STEP_TAG)
+                replace(ll.id, audioFragment, STEP_TAG)
             }
-            val eagleFragment = supportFragmentManager.findFragmentByTag(EAGLE_TAG) as AudioFragment
+            audioFragment = supportFragmentManager.findFragmentByTag(EAGLE_TAG) as AudioFragment
             supportFragmentManager.commit {
-                replace(ll.id, eagleFragment, EAGLE_TAG)
+                replace(ll.id, audioFragment, EAGLE_TAG)
             }
-            val launchFragment = supportFragmentManager.findFragmentByTag(LAUNCH_TAG) as AudioFragment
+            audioFragment = supportFragmentManager.findFragmentByTag(LAUNCH_TAG) as AudioFragment
             supportFragmentManager.commit {
-                replace(ll.id, launchFragment, LAUNCH_TAG)
+                replace(ll.id, audioFragment, LAUNCH_TAG)
             }
         }
 
