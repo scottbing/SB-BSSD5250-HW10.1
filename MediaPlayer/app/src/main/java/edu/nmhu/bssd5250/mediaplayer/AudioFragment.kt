@@ -7,29 +7,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 
 private const val AUDIO_RES = "audio_file" //key for bundle
 
 class AudioFragment : Fragment() {
 
+    private val STEP_TAG:String = "edu.nmhu.bssd5250.mediaplayer.step_tag"  // tag to look up frag
+    private val EAGLE_TAG:String = "edu.nmhu.bssd5250.mediaplayer.eagle_tag"  // tag to look up frag
+    private val LAUNCH_TAG:String = "edu.nmhu.bssd5250.mediaplayer.launch_tag"  // tag to look up frag
+
     private lateinit var viewModel:AudioViewModel
 
-    private var mediaPlayer: MediaPlayer? = null //will hold meidaplayer
+    private var mediaPlayer: MediaPlayer? = null //will hold mediaplayer
     private var audioRes:Int? = null //resource to play
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this).get(AudioViewModel::class.java)
         arguments?.let {
-            audioRes = it.getInt(AUDIO_RES) //load arguament from companion
+            audioRes = it.getInt(AUDIO_RES) //load argument from companion
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         if(this.mediaPlayer == null){
             this.mediaPlayer = MediaPlayer.create(context, audioRes!!) //make mediaplayer
         }
@@ -44,6 +49,9 @@ class AudioFragment : Fragment() {
             setOnClickListener {
                 stopMedia()
             }
+        }
+        v.findViewById<TextView>(R.id.sound_label).apply {
+            text = "NASA Sounds"
         }
         return v
     }

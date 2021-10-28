@@ -18,8 +18,8 @@ class MainActivity : AppCompatActivity() {
         val ll = LinearLayoutCompat(this).apply {
             orientation = LinearLayoutCompat.VERTICAL
             layoutParams = LinearLayoutCompat.LayoutParams(
-                LinearLayoutCompat.LayoutParams.MATCH_PARENT,
-                LinearLayoutCompat.LayoutParams.MATCH_PARENT
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT,
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT
             )
             id = LLID
         }
